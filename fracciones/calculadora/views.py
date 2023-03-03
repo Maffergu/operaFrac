@@ -18,7 +18,8 @@ def proceso(request):
     nombre = request.POST['nombre']
     nombre = nombre.upper()
     return HttpResponse('Hola '+ nombre)
-
+    
+@csrf_exempt
 def multiplicacion(request):
     body_unicode = request.body.decode('utf-8')
     body = loads(body_unicode)
