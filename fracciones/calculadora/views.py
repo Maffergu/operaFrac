@@ -66,14 +66,20 @@ def resta(request):
     return HttpResponse(json_res,content_type="text/json-comment-filtered")
     #return HttpResponse("La resta de " +numerador1+ "/"+denominador1+"-" +numerador2+ "/"+denominador2+"= " + str(r1)+"/"+str(r2))
 
+@csrf_exempt
 def division(request):
-    numerador1 = request.GET['numerador1']
-    denominador1 = request.GET['denominador1']
-    numerador2 = request.GET['numerador2']
-    denominador2 = request.GET['denominador2']
+    body_unicode = request.body.decode('utf-8')
+    body = loads(body_unicode)
+    numerador1 = body['numerador1']
+    denominador1 = body['denominador1']
+    numerador2 = body['numerador2']
+    denominador2 = body['denominador2']
     r1 = int(numerador1)*int(denominador2)
     r2 = int(numerador2)*int(denominador1)
-    return HttpResponse("La division de " +numerador1+ "/"+denominador1+"/" +numerador2+ "/"+denominador2+"= " + str(r1)+"/"+str(r2))
+    resultado = Fraccion(r1,r2)
+    json_res = resultado.toJSON()
+    return HttpResponse(json_res,content_type="text/json-comment-filtered")
+    #return HttpResponse("La division de " +numerador1+ "/"+denominador1+"/" +numerador2+ "/"+denominador2+"= " + str(r1)+"/"+str(r2))
 
 #Entrada: {"numerador1":1,"denominador1":2,"numerador2":1,"denominador2":2}
   
